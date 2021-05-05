@@ -1,28 +1,28 @@
 const array = [6, 5, 7, 9, 45, 0];
 const array2 = ['LilBub', 'Garfield', 'Heathcliff', 'Blue', 'Grumpy'];
 
-function pivot(array, fn, start = 0, end = array.length - 1) {
-  let pivot = array[0];
-  let pivotIndex = 0;
-  let changingElement = array[pivotIndex + 1];
-  for (let i = pivotIndex + 1; i < array.length; i++) {
-    if (typeof fn === 'function') {
-      if( fn(array[i], pivot) <= 0 ) {
-        array[pivotIndex + 1] = array[i];
-        array[i] = changingElement;
+function pivot(arr, comparator, start = 0, end = arr.length - 1) {
+  let pivot = arr[start];
+  let pivotIndex = start;
+  let changingElement = arr[pivotIndex + 1];
+  for (let i = pivotIndex + 1; i <= end; i++) {
+    if (typeof comparator === 'function') {
+      if( comparator(arr[i], pivot) < 0 ) {
+        arr[pivotIndex + 1] = arr[i];
+        arr[i] = changingElement;
         pivotIndex++;
-        changingElement = array[pivotIndex + 1]
+        changingElement = arr[pivotIndex + 1]
       }
-    } else if (array[i] < pivot) {
-      array[pivotIndex + 1] = array[i];
-      array[i] = changingElement;
+    } else if (arr[i] < pivot) {
+      arr[pivotIndex + 1] = arr[i];
+      arr[i] = changingElement;
       pivotIndex++;
-      changingElement = array[pivotIndex + 1]
+      changingElement = arr[pivotIndex + 1]
     }
   }
-  changingElement = array[pivotIndex];
-  array[pivotIndex] = pivot;
-  array[0] = changingElement;
+  changingElement = arr[pivotIndex];
+  arr[pivotIndex] = pivot;
+  arr[start] = changingElement;
   return pivotIndex
 }
 
