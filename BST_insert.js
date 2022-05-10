@@ -38,6 +38,7 @@ class BST {
       this.root = newNode
     } else {
       this.insertRecursive(this.root, newNode);
+      // let temp = this.root;
       // while (true) {
       //   if (value > temp.value) {
       //     if (!temp.right) {
