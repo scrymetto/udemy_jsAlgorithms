@@ -39,6 +39,32 @@ class BST {
     return this
   }
 
+  findRecursive(node, valueMin = node.value, valueMax = node.value) {
+    let minValue = valueMin;
+    let resultNode = null;
+    let leftResultNode = null;
+    let rightResultNode = null;
+    if (node.value > valueMax) {
+      if (valueMin === valueMax) {
+        resultNode = node;
+        minValue = node.value;
+      } else {
+        if (node.value < valueMin) {
+          minValue = node.value;
+          resultNode = node;
+        }
+      }
+    }
+
+    if (node.left) {
+      leftResultNode = this.findRecursive(node.left, minValue, valueMax)
+    }
+    if (node.right) {
+      rightResultNode = this.findRecursive(node.right, minValue, valueMax)
+    }
+    return resultNode || leftResultNode || rightResultNode;
+  }
+
   remove(value) {
 
     if (!this.root) return null;
@@ -71,6 +97,12 @@ class BST {
           }
           resultNode.left = null;
           resultNode.right = null;
+        }
+        // two children
+        if (resultNode.left && resultNode.right) {
+          const replaced = this.findRecursive(resultNode);
+          this.remove(replaced.value);
+          parentNode[replacedChildProp].value = replaced.value;
         }
         return resultNode;
       } else {
